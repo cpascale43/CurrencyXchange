@@ -1,35 +1,29 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import FetchLocation from './components/FetchLocation'
-import UsersMap from './components/UsersMap'
+import React, { useState } from "react";
+import {
+  View,
+  StyleSheet
+} from "react-native";
+import Home from "./components/Home";
+import Loading from "./components/Loading"
+import Colors from "./constants/Colors";
 
-class App extends React.Component {
+export default function App() {
+  const [isVisible, setIsVisible] = useState(true)
 
+  handlePress = () => {
+    setIsVisible(false)
+  };
 
-  getUserLocationHandler = () => {
-    console.log('PRESSED')
-    navigator.geolocation.getCurrentPosition(location => {
-      console.log(location)
-    }, err => console.log(err))
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <FetchLocation onGetLocation={this.getUserLocationHandler} />
-        <UsersMap />
-      </View>
-    );
-  }
+  return (
+  <View style={styles.container}>
+    <Loading  />
+    <Home visible={isVisible} onPress={handlePress} />
+  </View>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    flex: 1
+  }
 });
-
-export default App
